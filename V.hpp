@@ -40,9 +40,9 @@ class V
 public:
 
 //—————————————————————————————— MEMBERS ————————————————————————————————————————
-	double x; //! x-component of V.
-	double y; //! y-component of V.
-	double z; //! z-component of V.
+	double X; //! x-component of V.
+	double Y; //! y-component of V.
+	double Z; //! z-component of V.
     
     constexpr static double tolerance = __VFORVECTOR_DEFAULT_TOLERANCE__; //! Tolerance limit for the class.
 
