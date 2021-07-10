@@ -1,67 +1,50 @@
-//Header file class Vector → <vector.hpp>
+#pragma once
+//Header file class V for Vector → <V.hpp>
+
 //><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
 //><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
 
-  /*$$$$$            /$$                                      /$$$$$$  /$$              
- /$$__  $$          | $$                                     /$$__  $$|__/              
-| $$  \__/  /$$$$$$ | $$$$$$$   /$$$$$$   /$$$$$$   /$$$$$$ | $$  \__/ /$$ /$$$$$$/$$$$ 
-|  $$$$$$  /$$__  $$| $$__  $$ /$$__  $$ /$$__  $$ /$$__  $$|  $$$$$$ | $$| $$_  $$_  $$
- \____  $$| $$  \ $$| $$  \ $$| $$$$$$$$| $$  \__/| $$  \ $$ \____  $$| $$| $$ \ $$ \ $$
- /$$  \ $$| $$  | $$| $$  | $$| $$_____/| $$      | $$  | $$ /$$  \ $$| $$| $$ | $$ | $$
-|  $$$$$$/| $$$$$$$/| $$  | $$|  $$$$$$$| $$      |  $$$$$$/|  $$$$$$/| $$| $$ | $$ | $$
- \______/ | $$____/ |__/  |__/ \_______/|__/       \______/  \______/ |__/|__/ |__/ |__/
-          | $$                                                                          
-          | $$                                                                          
-          |_*/
-//><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
-//><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
-
-//><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
-//  Developed by: Yatharth Bhasin       || Licence: *******************
-//  Discipline of Physics               || Compile : Ok -> 14/01/2021 12:30 PM
-//  IIT Indore                          || Tested : NOK
-//  (yatharth1997@gmail.com)            || Documentation : NOK
-//  (github: yatharthb97)               ||      
+ /*$    /$$     
+| $$   | $$
+| $$   | $$   ||  Developed by: Yatharth Bhasin       || Licence: *******************
+|  $$ / $$/   ||  Computational Physicist             || Compile : NOk
+ \  $$ $$/    ||  IIT Indore  | TIFR Hyderabd         || Tested : NOK
+  \  $$$/     ||  (yatharth1997+git@gmail.com)        || Documentation : NOK
+   \  $/      ||  (github: yatharthb97)               ||      
+    \*/    
+                      
 //><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
 
 //Preprocessor Commands
-#pragma once
-
-#include <cmath>
-#include <sstream>
-#include <iostream>
-#include <random>
-
-using namespace std;
-//#include"random.h"
 
 
-#define __VEC_V_TOLERANCE__ 1E-10
-#define __VEC_V_UNITTOLERANCE__ 1.0 + __VEC_V_TOLERANCE__
-#define __VEC_V_NUNITTOLERANCE__ 1.0 - __VEC_V_UNITTOLERANCE__
+#include <cmath>    //! For basic math operations.
+#include <sstream>  //! For info functions for printing.
+
+//Macro Definaions
+#define __VFORVECTOR_DEFAULT_TOLERANCE__ 1E-10 //! Defines the default tolerance value for the class.
+
+#ifndef __DISABLE_VFORVECTOR_MACROS__
+    //!!!!! --> No spaces   Useful with operator[]. 
+    #define xx 0    // Used as - vect[xx] vs vect['x']
+    #define yy 1    // Used as - vect[yy] vs vect['y']
+    #define zz 2    // Used as - vect[zz] vs vect['z']
+#endif
 
 //**********************************************************************************
 
-/** Class V - Represents 3D Vectors. A class of variables that defines a three component Vector.
- */
-
- //!!!!! --> No spaces   Useful with operator[] -> V vect; 
-#define xx 0///////////  vect[xx] vs vect['x']
-#define yy 1///////////  vect[yy] vs vect['y']
-#define zz 2///////////  vect[zz] vs vect['z']
-///////////////////////
-
-
+/**
+ *  @brief - Represents 3D Vectors. A class of variables that defines a three component Vector.*/
 class V
 {
 public:
 
-//Member Variables
-	double x; /*!< x-component */
-	double y; /*!< y-component */
-	double z; /*!< z-component */
-    constexpr static double tolerance = __VEC_V_TOLERANCE__; /*!< tolerance limit for the class */
-//**********************************************************************************
+//—————————————————————————————— MEMBERS ————————————————————————————————————————
+	double x; //! x-component of V.
+	double y; //! y-component of V.
+	double z; //! z-component of V.
+    
+    constexpr static double tolerance = __VFORVECTOR_DEFAULT_TOLERANCE__; //! Tolerance limit for the class.
 
 
 
