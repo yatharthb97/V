@@ -4,14 +4,14 @@
 //><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
 //><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
 
- /*$    /$$     
-| $$   | $$
+ /*$    /$$   ||  --- V for Vector ---
+| $$   | $$   ||  (A scientific 3-vector library) 
 | $$   | $$   ||  Developed by: Yatharth Bhasin       || Licence: *******************
 |  $$ / $$/   ||  Computational Physicist             || Compile : NOk
  \  $$ $$/    ||  IIT Indore  | TIFR Hyderabd         || Tested : NOK
   \  $$$/     ||  (yatharth1997+git@gmail.com)        || Documentation : NOK
    \  $/      ||  (github: yatharthb97)               ||      
-    \*/    
+    \*/  
                       
 //><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
 
@@ -47,475 +47,564 @@ public:
     constexpr static double tolerance = __VFORVECTOR_DEFAULT_TOLERANCE__; //! Tolerance limit for the class.
 
 
-
 //—————————————————————————————— CONSTRUCTORS ————————————————————————————————————————
 
     //1
-    //Default Constructor
-    //!Class Constructor. Initialises each component to 0.
-    /*
-    */
-    V():x(0.0), y(0.0), z(0.0)
-    {} //End of Default Constructor
+    /**
+     * @brief Default class constructor. Initialises each component to 0.0 .*/
+    V():X(0.0), Y(0.0), Z(0.0)
+    {}
 
 
     //2
-    //Default Constructor
-    //!Class Constructor. Copy a vector(or construt from a vector).
     /*
-    \param V &other - const passed by reference that gets copied.
-    */
-    V(V const &other): x(other.x), y(other.y), z(other.z)
-    {} //End of Constructor
+    @brief class constructor. Copy a vector(or construt from a vector).
+    @param V &other - const passed by reference that gets copied. */
+    V(V const &other): X(other.X), Y(other.Y), Z(other.Z)
+    {}
 
 
     //3
-    //!Overloading Class Constructor. Initialises each component to passed parameters.
-    /*
-    \param x,y,z components
-    */
-    V(double x, double y, double z):x(x), y(y), z(z)
-    {} //End of Overloading Constructor
+    /**
+     * @brief Overloaded class constructor. Initialises each component to passed parameters.
+     * @param x,y,z components. */
+    V(double X, double Y, double Z): X(X), Y(Y), Z(Z)
+    {} 
 
 
-//—————————————————————————————— INFO Functions ————————————————————————————————————————
+//—————————————————————————————— INFO FUNCTIONS ————————————————————————————————————————
 
     //4
-    //!Print Vector Info function. Prints the vector with comma seperated components and enclosed in brackets.
-    /*
-    */
-    std::string info() const 
+    /**
+     * @brief Print Vector Info function. Prints the vector with comma seperated components and enclosed in brackets. */
+   std::string info() inline const 
     {
-        std::ostringstream o;
-        o << "(" << x << ", " << y << ", " << z << ")";
-        return o.str();
+        std::ostringstream stream;
+        stream << "(" << X << ", " << Y << ", " << Z << ")";
+        return stream.str();
     } //End of info()
 
     //5
-    //!Print Vector Info function seperated by 'sep'. Prints the vector with custom seperator seperated components and enclosed in brackets.
-    /*
-    */
-    std::string info(char sep) const 
+    /**
+     * @brief Print Vector Info function seperated by 'sep'. Prints the vector with custom seperator seperated components and enclosed in brackets. */
+    std::string info(char sep) inline const 
     {
-        std::ostringstream o;
-        o << x << sep << y << sep << z;
-        return o.str();
+        std::ostringstream stream;
+        stream << X << sep << Y << sep << Z;
+        return stream.str();
     } //End of info()
 
     
     //6
-    //!Print Vector raw info function. Prints the vector with space seperated components and without brackets.
-    /*
-    */
-    std::string infoRaw() const 
+    /**
+     * @brief Print vector raw info function. Prints the vector with space seperated components and without brackets. */
+    std::string info_raw() inline const 
     {
-         std::ostringstream o;
-         o <<x << " " << y << " " << z;
-         return o.str();
-    } //End of infoRaw()
+         std::ostringstream stream;
+         stream << X << " " << Y << " " << Z;
+         return stream.str();
+    } //End of info_raw()
 
 
-//—————————————————————————————— Size ————————————————————————————————————————
+
+//—————————————————————————————— COMPONENT ACCESSOR  ————————————————————————————————————————
     //7
-    //!Function returns size of the function
-    /*
-    \return double size
-    */
-    inline double size() const 
+    //! Accessor for component -> x.
+    double __attribute__((always_inline)) x() const
     {
-        return std::sqrt(this->x*this->x + this->y*this->y + this->z*this->z);
-    } //End of size()
-
-
-    inline double size_sq() const
-    {
-        return (this->x*this->x + this->y*this->y + this->z*this->z);
+        return X;
     }
 
-
-//—————————————————————————————— Norm ————————————————————————————————————————
     //8
-    //! Normalise a vector to have unit length. Only normalises if the vector has non-zero length(greater than tolerance limit), else all components are zero.
-    /*
-    */    
-    inline void normalise() 
+    //! Accessor for component -> y.
+    double __attribute__((always_inline)) y() const
     {
-        double tot = this->size(); //Always positive
-
-            tot = (tot > V::tolerance)*(1.0 / tot);
-            x *= tot;
-            y *= tot;
-            z *= tot;
-
-    } //End of normalise()
-
-    //Alias of normalise()
-    void __attribute__((always_inline)) norm() 
-    {
-        normalise();
+        return Y;
     }
 
-//—————————————————————————————— Checkers ————————————————————————————————————————
     //9
-    //! Checks if the vector is a unit vector. Error tolerance set to __VEC_V_TOLERANCE__
-    /*
-    \return bool answer
-    */
-    bool isUnit() const
-     {
-        if ( this->size() > __VEC_V_NUNITTOLERANCE__ && this->size() < __VEC_V_TOLERANCE__ )
-            return false;
-        else
-            return true;
-    } //End of isUnit()
-
+    //! Accessor for component -> z.
+    double __attribute__((always_inline)) z() const
+    {
+        return Z;
+    }
 
     //10
-    //! Checks if the vector is a unit vector. Error tolerance set to passed tolerance value.
-    /*
-    \param double tolerance
-    \return bool answer
-    */
-    bool isUnit(double tolerance) const
+    //! Accessor for component -> x squared.
+    double __attribute__((always_inline)) x_sq() const
     {
-        if ( this->size() > 1.0 + tolerance && this->size() < 1.0 + tolerance )
-            return false;
-        else
-            return true;
-    } //End of isUnit()
-
-
-    //58
-    //! Checks if one or more components is NaN. Returns true if any of the one component is NaN.   
-    inline bool is_nan() const
-    {
-        if(std::isnan(x) || std::isnan(y) || std::isnan(z))
-            return true;
-        else
-            return false;
-    } //End of is_nan
-
-
-    //24
-    //! Checks if the vector is a null vector with set tolerance. Is a size based approach more eficient?
-    /*
-    \param (optional) tolerance
-    \return bool -> true is null
-    */
-    inline bool is_null(double tolerance = __VEC_V_TOLERANCE__)
-    {
-        return(x < tolerance && x > -tolerance &&
-               y < tolerance && y > -tolerance &&
-               z < tolerance && z > -tolerance);
-    } //End of is_null()
-
-
-//—————————————————————————————— Negative ————————————————————————————————————————
-
-    //11
-    //! Returns the negative of the given vector
-    inline V neg() const 
-    {
-        return V(-x, -y, -z);
-    } //End of neg()
-
-    //12
-    //! Converts the given vector into its reflection : Negative. Alias "reflect" also defined for this function.
-    inline void comp_neg()
-    {
-        this->x = -x;
-        this->y = -y;
-        this->z = -z;
-    } //End of make_neg()
-
-    //Alia "reflect"
-    void __attribute__((always_inline)) comp_reflect()
-    {
-        comp_neg();
+        return X * X;
     }
 
-//—————————————————————————————— Products ————————————————————————————————————————
-
-    //13
-    //! Calculates the dot product between two vectors. Error tolerance set to __VEC_V_TOLERANCE__ .
-    /*
-    \return double dot product
-    */
-    inline double dot(const V& other) const
+    //11
+    //! Accessor for component -> y squared.
+    double __attribute__((always_inline)) y_sq() const
     {
-        double temp = x*other.x + y*other.y + z*other.z;
-        
-        if(temp < __VEC_V_TOLERANCE__ && temp > -1*(__VEC_V_TOLERANCE__)) 
-            return 0;
-        
-        else
-            return temp;
-    } //End of dot()
+        return Y * Y;
+    }
+
+    //12
+    //! Accessor for component -> z squared.
+    double __attribute__((always_inline)) z_sq() const
+    {
+        return Z * Z;
+    }
+
+
+//————————————————————————————————— CONST OPERATORS  ————————————————————————————————————————————————
 
     
-    //14
-    //! Fast Dot - Calculates the dot product between two vectors. Does not check for tolerance.
-    /*
-    \return double dot product
-    */
-    inline double fdot(const V& other) const
+    //=, +=, -=, *=, /= operate on the existing Vectors.
+
+
+    //13
+    /**
+     * @brief Returns a component wise subtraction result.
+     * @param V other vector.
+     * @return subracted vector. */
+    inline V operator- (const V& other) const 
     {
-        return (x*other.x + y*other.y + z*other.z);
-    } //End of dot()
+        return V(X - other.X, Y - other.Y, Z - other.Z);
+    }
+
+
+
+    //14
+    /**
+     * @Returns the component wise addition result.
+     * @param V other vector.
+     * @return added vector. */
+    inline V operator+ (const V &other) const
+    {
+         return V( X + other.X, Y + other.Y, Z + other.Z );
+    } //End of Operator+
 
 
     //15
-    //! Calculates the angle between two vectors using arccos(cos inverse). The block also defines an alias raw_angle for the same function.
-    /*
-    \return double arc cos
-    */
+    /**
+     * @brief  Multiplication Operator. Scales the vector components with a scalar.
+     * @param scale scalar -> template.
+     * @return V scaled vector. */
+    template <typename T>
+    inline V operator* (T scale) const
+    {
+      return V(X * scale, Y * scale, Z * scale);     
+    } //End of Operator*
+
+
+    //16
+    /**
+     * @brief  Division Operator. Scales the vector components with a scalar.
+     * \param scale scalar -> template.
+     * @return V scaled vector. */
+    template <typename U>
+    inline V operator/ (U divscale) const
+    {
+      return V(X/divscale, Y/divscale, Z/divscale);     
+    } //End of Operator/
+
+
+
+    //17
+    /**
+     * @brief  Equality Operator with default tolerance.
+     * @param other V other vector.
+     * @return bool comparision result. */
+    inline bool operator== (const V &other)  const
+    {
+        return ((X - other.X) < V::tolerance && 
+                (Y - other.Y) < V::tolerance && 
+                (Z - other.Z) < V::tolerance);
+    } //End of operator==
+
+
+
+    //18
+    /**
+     * @brief Unequality Operator with set tolerance.
+     * @param o V other vector.
+     * @return bool comparision result. */
+    inline bool operator!= (V &other) const
+    {
+        return !(operator==(other));
+    } //End of operator!=
+
+
+//————————————————————————————————— SIZE FUNCTIONS ————————————————————————————————————————————————
+    //19
+    /**
+     * @brief Function returns size of the vector.*/
+    double size() inline const 
+    {
+        return std::sqrt(this->x_sq() + this->y_sq() + this->z_sq());
+    }
+
+    //20
+    /**
+     * @brief Function returns the size squared of the vector. */
+    double size_sq() inline const
+    {
+        return (this->x_sq() + this->y_sq() + this->z_sq());
+    }
+
+
+//————————————————————————————————— NORM FUNCTIONS ————————————————————————————————————————————————
+    //21
+    /**
+     * @brief Return a normalised vector that has unit length. Only normalises if the vector has non-zero length(greater than tolerance limit), else all components are zero. */    
+    V normalise() inline const
+    {
+        double tot = this->size(); //Always positive
+        //tot = (tot > V::tolerance) * (1.0 / tot) + 0; //Is this meaningless?
+        return V(this->X*tot, this->Y*tot, this->Z*tot);
+
+    } //End of normalise()
+
+    //22
+     /**
+     * @brief Alias of V::normalise(). Return a normalised vector that has unit length. Only normalises if the vector has non-zero length(greater than tolerance limit), else all components are zero. */ 
+    V __attribute__((always_inline)) norm() const
+    {
+        return normalise();
+    }
+
+
+
+//————————————————————————————————— NEGATIVE FUNCTIONS ————————————————————————————————————————————————
+
+    //23
+    //! Returns the negative of the given vector
+    inline V neg() inline const 
+    {
+        return V(-X, -Y, -Z);
+    }
+
+//————————————————————————————————— CHECK FUNCTIONS ————————————————————————————————————————————————
+    
+    //24
+    /**
+     * @brief Checks if the vector is a unit vector.
+     * \return True if the vector is a unit vector. */
+    bool is_unit(const double tolerance = V::tolerance) inline const
+     {
+        return (std::fabs(this->size() - 1.0) <= tolerance);
+    }
+
+    //25
+    /**
+     * @brief Fast check if the vector is a unit vector. Needs to be used with causion as the operation is ususlly meaningless in most cases due to floating point rounding error.
+     * \return bool answer.*/
+    bool fis_unit() inline const
+     {
+        return (this->size() == 1.0);
+    }
+
+    //26
+    /**
+     * @brief Checks if one or more components is NaN. Returns true if any of the component is NaN.
+     * @return True if any component is NaN. */    
+    inline bool is_nan() inline const
+    {
+        return (std::isnan(X) ||
+                std::isnan(Y) || 
+                std::isnan(Z));
+    }
+
+    //27
+    /**
+     * @brief Checks if the vector is a null vector with set tolerance (All component must be below the tolerance).
+     * @param (optional) tolerance. 
+     * @return bool -> true is null. */
+    inline bool is_null(double tolerance = V::tolerance) inline const
+    {
+        V temp = this->abs();
+        return (temp.X <= tolerance && 
+                temp.Y <= tolerance &&
+                temp.Z <=tolerance);
+    }
+
+
+    //28
+    /**
+     * @brief Returns true if the vectors are orthogonal to each other. The dot product must be zero.
+     * */
+    bool inline is_ortogonal(V &other, double tolerance = V::tolerance) inline const
+    {
+        double dot = this->fdot(other);
+        return dot <=tolerance;
+    }
+
+
+    //29
+    /**
+     * @brief Returns if the vector is a scalar. Scalar mask can be used to treat a V object as a scalar. In that case, the X component assumes the scalar and the rest two components must be below the tolerance. */
+    inline bool is_scalar(double tolerance = V::tolerance) inline const
+    {
+        return std::fabs(this->X) >= V::tolerance && 
+               std::fabs(this->Y) < V::tolerance && 
+               std::fabs(this->Z) < V::tolerance;
+    }
+
+
+    //30
+    /**
+     * @brief Compares the two vectors without any error tolerance.
+     * @param Other vector for comparision. */
+    inline bool is_exact_equal(const V &other) inline const
+    {
+        return (X == other.X) && (Y == other.Y) && (Z == other.Z);
+    }
+
+//————————————————————————————————— PRODUCT FUNCTIONS ————————————————————————————————————————————————
+
+    //31
+    /**
+     * @brief Calculates the dot product between two vectors. Returns 0 if the answer is below tolerance.
+     * @return double dot product. */
+    inline double dot(const V& other, double tolerance = V::tolerance) const
+    {
+        double temp = X * other.X + Y * other.Y + Z * other.Z;
+        
+        return (std::fabs(temp) > tolerance) * temp + 0;
+    }
+
+    
+    //32
+    /**
+     * @brief Fast Dot - Calculates the dot product between two vectors. Does not check for tolerance.
+     * @return return double dot product. */
+    inline double fdot(const V& other) const
+    {
+        return (X * other.X + Y * other.Y + Z * other.Z);
+    }
+
+
+    //33
+    /**
+     * @Cross product of two vectors.
+     * @param B V other vector.
+     * @return cross product - V. */
+    inline V cross(const V& other) const 
+    {
+        return V(Y * other.Z - Z * other.Y,
+                -X * other.Z + Z * other.X,
+                 X * other.Y - Y * other.X);
+    }
+
+
+
+    //34
+    /**
+     * @brief Returns the scalar triple product of three vectors.
+     * @param Three vectors - A, B, C; such that - Scalar triple product: A • (B x C) . */
+    inline double scalar_tri_prod(const V &A, const V &B, const V &C)
+    {
+        V tmp = B.cross(C);
+        return A.dot(tmp);
+    }
+
+    //35
+    /**
+     * @brief Returns the vector triple product of three vectors.
+     * @param Three vectors - A, B, C; such that - Vector triple product: A x (B x C) = B * A•C - C * A•B . */
+    inline V vector_tri_prod(const V &A, const V &B, const V &C)
+    {
+        return (B * (A.dot(C))) - (C * A.dot(B));
+    }
+
+
+    //36
+    //! Calculates the angle between two vectors using arccos(cos inverse).
     inline double arccos(const V& other) const
     {
-        double temp = x*other.x + y*other.y + z*other.z;
+        double temp = this->fdot();
         return std::acos(temp);
     } //End of arccos()
 
-   //Alias of arccos
-    double __attribute__((always_inline)) raw_angle(const V& other) const
+
+   //37
+   /**
+    * @brief Alias of V::arccos().  Calculates the angle between two vectors using arccos(cos inverse). */
+    double __attribute__((always_inline)) radian_angle(const V& other) const
    {
         return arccos(other);
    }
 
+//————————————————————————————————— SCALAR FUNCTIONS ————————————————————————————————————————————————
 
-    //16
-    //! Cross product of two vectors.
-    /*
-    \param B V other vector
-    \return cross product - V.
-    */
-    inline V cross(const V& other) const 
+    //38
+    /**
+     * @brief Converts the object to a scalar mask. The scalar is assigned to the X component. The rest of the components are set to zero.
+     * @param Scalar to set. */
+    void make_scalar(double scalar) inline
     {
-        return V(y*other.z - z*other.y, -x*other.z + z*other.x, x*other.y - y*other.x);
-    } //End of cross()
-//——————————————————————————————   ————————————————————————————————————————
-  
-
-
-
-
-
-    //22
-    //! Multiply corresponding components of a vector.
-    inline V comp_mul(V &other) const
-    {
-        return V(x*other.x, y*other.y, z*other.z);
-    } //End of compmul()
-
-
-    //23
-    //! Convert the Vector into a null Vector.
-    inline void comp_null()
-    {
-        this->x = 0.0;
+        this->x = scalar;
         this->y = 0.0;
         this->z = 0.0;
-    } //End of null()
+    }
 
-
-
-
-
-
-//////======================== START OF OPERATORS ==================================
-    
-    // +, -, *, / return new constructed Vectors.
-    //=, +=, -=, *=, /= operate on the existing Vectors.
-
-    //25
-    //! Assignement Operator.
-    /*
-    \param V other - assigner.
-    */
-    inline void operator= (const V& other) // MUTATOR
+    //39
+    /**
+     * @brief Retrives the scalar value. It is just a wrapper around V::x() accessor. */
+    double get_scalar() inline const
     {
-        x = other.x;
-        y = other.y;
-        z = other.z;
-    } //End of Operator=
-//**********************************************************************************
+        return this->x();
+    }
 
-    //26
-    //! Subtraction Operator. Component wise subtraction.
-    /*
-    \param V other vector.
-    \return subracted vector
-    */
-    inline V operator- (const V& other) const 
+//————————————————————————————————— TEMPLATES & GENERATORS ————————————————————————————————————————————————
+
+    //40
+    /**
+     * @brief Initalize x, y, and z with the given arguement.
+     * @param double initalization value. */
+    void set_xyz(double val)  inline const
     {
-        return V(x - other.x, y - other.y, z - other.z);
-    } //End of Operator-
+        X = val; Y = val; Z = val; 
+    }
 
-//**********************************************************************************
-
-    //27
-    //! Addition Operator. Component wise addition.
-    /*
-    \param V other vector.
-    \return added vector
-    */
-    inline V operator+ (const V &other) const
+    //41
+    /**
+     * @brief Initalize x and y with the given arguement, and z is set to zero.
+     * @param double initalization value. */
+    void set_xy(double val) inline const
     {
-         return V( x + other.x, y + other.y, z + other.z );
-    } //End of Operator+
-//**********************************************************************************
+        X = val; Y = val; Z = 0.0;
+    }
 
-    //28
-    //! Multiplication Operator. Scales the vector with a scalar.
-    /*
-    \param scale scalar -> template
-    \return V scaled vector
-    */
-    template <typename T>
-    inline V operator* (T scale) const
+    //42
+    /**
+     * @brief Initalize y and z with the given arguement, and z is set to zero.
+     * @param double initalization value. */
+    void set_yz(double val) inline const
     {
-      return V(x*scale, y*scale, z*scale);     
-    } //End of Operator*
-//**********************************************************************************
+        X = 0.0; Y = val; Z = val;
+    }
 
-    //29
-    //! Division Operator. Scales the vector with a scalar.
-    /*
-    \param scale scalar -> template
-    \return V scaled vector
-    */
-    template <typename U>
-    inline V operator/ (U divscale) const
+    //43
+    /**
+     * @brief  Initalize z and x with the given arguement, and z is set to zero.
+     * @param double initalization value. */
+    void set_zx(double val) inline const
     {
-      return V(x/divscale, y/divscale, z/divscale);     
-    } //End of Operator/
-//**********************************************************************************
-   
-    //30
-    //! Iterative Subtraction Operator.
-    /*
-    \param V other vector
-    */
-    inline void operator-= (const V& other) 
-    {
-        x -= other.x;
-        y -= other.y;
-        z -= other.z;
-    } //End of operator-= 
-//**********************************************************************************
+        X = val; Y = 0.0; Z = val;   
+    }
 
-    //31
-    //! Iterative Addition Operator.
-    /*
-    \param V other vector
-    */
+    //44
+    /**
+     * @brief Generates a vector by adding a given scalar and generating function.
+     * @param Scalar common to all the three components.
+     * @param A generating function pointer that returns a double.
+     * @return A generated 3 vector V.*/
+    V generate_add(double scalar = 0, double (*generating_fn)())
+    {
+        return V(scalar + generating_fn(), scalar + generating_fn(), scalar + generating_fn());
+    }
+
+    //45
+    /**
+     * @brief Generates a vector by multiplying a given scalar and generating function.
+     * @param Scalar common to all the three components.
+     * @param A generating function pointer that returns a double.
+     * @return A generated 3 vector V.*/
+    V generate_mul(double scalar = 0, double (*generating_fn)())
+    {
+        return V(scalar * generating_fn(), scalar * generating_fn(), scalar * generating_fn());
+    }
+
+    //46
+    /**
+     * @brief Generates a vector by operating the scalar and the generating function with the passed operation (3rd parameter).
+     * @param Scalar common to all the three components.
+     * @param A generating function pointer that returns a double.
+     * @param The operation to perform between the scalar and the vector.
+     * @return A generated 3 vector V.*/
+    V generate(double scalar = 0, double (*generating_fn)(), double (*op)(double, double))
+    {
+        return V( op(scalar, generating_fn()),
+                  op(scalar, generating_fn()),
+                  op(scalar, generating_fn()) );
+    }
+
+
+
+    //47
+    /**
+     * @brief Generates a vector by operating the two generating functions with the passed operation (3rd parameter).
+     * @param First generating function pointer that returns a double.
+     * @param Second generating function pointer that returns a double.
+     * @param The operation to perform between the two generating functions.
+     * @return A generated 3 vector V.*/
+    V generate( double(*generating_fn1)(), double (*generating_fn2)(), double (*op)(double, double))
+    {
+        return V( op(generating_fn1(), generating_fn2()),
+                  op(generating_fn1(), generating_fn2()),
+                  op(generating_fn1(), generating_fn2()) );
+    }
+
+
+
+//—————————————————————————————— Non-const Operators (mutators) ————————————————————————————————————————
+
+    //48
+    /**
+     * @brief Assignment operator
+     * @param V other - assigner. */
+    void operator= (const V& other) inline
+    {
+        X = other.X;
+        Y = other.Y;
+        Z = other.Z;
+    }
+
+    //49
+    /**
+     * @brief  Iterative Subtraction Operator.
+     * @param V other vector. */
+    void operator-= (const V& other) inline 
+    {
+        X -= other.X;
+        Y -= other.Y;
+        Z -= other.Z;
+    }
+
+
+    //50
+    /**
+     * @brief  Iterative Addition Operator.
+     * @param V other vector. */
     inline void operator+= (const V& other) 
     {
-            x += other.x;
-            y += other.y;
-            z += other.z;
-    } //End of operator+=
-//**********************************************************************************
-
-    //32
-    //! Equality Operator with set tolerance.
-    /*
-    \param other V other vector.
-    \return bool comparision result.
-    */
-    inline bool operator== (const V &other)  const
-    {
-        return ((x - other.x) < V::tolerance && 
-                (y - other.y) < V::tolerance && 
-                (z - other.z) < V::tolerance);
+            X += other.X;
+            Y += other.Y;
+            Z += other.Z;
+    }
 
 
-    } //End of operator==
-//**********************************************************************************
-
-    //33
-    //! Unequality Operator with set tolerance
-    /*
-    \param o V other vector.
-    \return bool comparision result.
-    */
-    inline bool operator!= (V &other) 
-    {
-        return !(operator==(other));
-    } //End of operator!=
-//**********************************************************************************
-
-    //34
-    //! Iterative Scaling Operator - double.
-    /*
-    \param scale double -> template
-    */
+    //51
+    /**
+     * @param Iterative Scaling Operator - double.
+     * @param scale double -> template. */
     template <typename T>
     inline void operator*= (T scale) //MUTATOR
     {
-        x *= scale; y *= scale; z *= scale;
-    } //End of operator*=
-//**********************************************************************************
+        X *= scale; Y *= scale; Z *= scale;
+    }
 
-    //35
-    //! Iterative Scaling Division Operator - double.
-    /*
-    \param scale double -> template
-    */
+
+    //52
+    /**
+     * @brief Iterative Scaling Division Operator - double.
+     * @param scale double -> template. */
     template <typename T>
-    inline void operator/= (T scale) //MUTATOR
+    inline void operator/= (T scale)
     {
-        x /= scale; y /= scale; z /= scale;
-    } //End of operator/=
-//**********************************************************************************
-
-/////END OF OPERATORS /////////////////////////////////////////////////////
+        X /= scale; Y /= scale; Z /= scale;
+    }
 
 
 
+//——————————————————————————————  ————————————————————————————————————————
 
-//-------------------- COMPONENT ACCESSORS --------------------------------------------------
-    //38
-    //! Accessor for component -> x.
-    double __attribute__((always_inline)) X() const
-    {
-        return this->x;
-    } //End of x()
-
-    //39
-    //! Accessor for component -> y.
-    double __attribute__((always_inline)) Y() const
-    {
-        return this->y;
-    } //End of y()
-
-    //40
-    //! Accessor for component -> z.
-    double __attribute__((always_inline)) Z() const
-    {
-        return this->z;
-    } //End of z()
-
-
-    //! Accessor for component -> x squared.
-    double __attribute__((always_inline)) X_sq() const
-    {
-        return this->x*this->x;
-    } //End of X_sq()
-
-    //39
-    //! Accessor for component -> y squared.
-    double __attribute__((always_inline)) Y_sq() const
-    {
-        return this->y*this->y;
-    } //End of Y_sq()
-
-    //40
-    //! Accessor for component -> z squared.
-    double __attribute__((always_inline)) Z_sq() const
-    {
-        return this->z*this->z;
-    } //End of Z_sq()
-//-------------------- COMPONENT ACCESSORS --------------------------------------------------
 
    /*
     Include code for int functors, double functors and, mt_19937 generator
@@ -695,17 +784,7 @@ public:
 ///><><><><><><><><><><><>< ROTATION FUNCTIONS ><><><><><><><><><><><><><><><><><><><
 
 
-    //49
-    bool inline is_ortogonal(V &other)
-    {
 
-    }
-
-    //50
-    bool inline is_ortogonal(V &other, double tolerance)
-    {
-        
-    }
 
 
     //51
@@ -822,43 +901,13 @@ public:
 
 
 
-    //59
-    inline double Scalar_tri_prod(const V &A, const V &B, const V &C)
-    {
-        //Scalar triple product: A • (B x C)
-        V tmp = B.cross(C);
-        return A.dot(tmp);
-    } // End of scalar_tri_prod()
-
-    //60
-    inline V Vector_tri_prod(const V &A, const V &B, const V &C)
-    {
-        //Vector triple product: A x (B x C) = B * A•C - C * A•B
-        return (B * (A.dot(C))) - (C * A.dot(B));
-    } // End of vector_tri_prod()
 
 
-//Scalar functions
-    inline void setscalar(double scalar)
-    {
-        this->x = scalar;
-        this->y = 0.0;
-        this->z = 0.0;
-    }
+//------------------------------------        Scalar functions    ----------------------------------
 
-    inline bool is_scalar() const
-    {
-        return std::fabs(this->x) > V::tolerance && 
-               std::fabs(this->y) < V::tolerance && 
-               std::fabs(this->y) < V::tolerance;
-    }
 
-    inline double getscalar() const
-    {
-        return X();
-    }
 
-    
+//--------------------------------------- Component Mutator Functions ------------------------------   
     inline void comp_divide(const V &other)
     {
         this->x /= other.x;

@@ -29,7 +29,3 @@ The library is also a **personal project** and primarily caters to my own use. H
    ```
 
 4. Any Boolean operations that check a particular condition either start with the suffix *"is" or "has_"*.  Example: ```V::is_null()``` checks if the given object is a null vector.
-
-   
-
-  
