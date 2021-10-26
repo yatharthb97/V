@@ -9,9 +9,27 @@ The library is also a **personal project** and primarily caters to my own use. H
 ## Planned Features:
 
 1. Single header file include library.
-2. Has optional compiler optimization options that can substantially speed up operations.
+
+2. Explicit Vectorization.
+
 3. Has a consistent library grammar (clear syntactic separation between accessors and modifiers).
+
 4. Has unit tests.
+
+5. **Experiment with all accessor forms ↓**
+
+   ```c++
+   V vec(1.0, 2.0, 3.0);
+   std::cout << vec.x();
+   std::cout << vec.x;
+   std::cout << vec[0];
+   std::cout << vec[xx];
+   std::cout << vec['x'];
+   
+   //All statements output ==> 1.0
+   ```
+
+   
 
 ## Library Grammar
 
@@ -29,3 +47,4 @@ The library is also a **personal project** and primarily caters to my own use. H
    ```
 
 4. Any Boolean operations that check a particular condition either start with the suffix *"is" or "has_"*.  Example: ```V::is_null()``` checks if the given object is a null vector.
+
