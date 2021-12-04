@@ -350,7 +350,7 @@ public:
     /**
      * @brief Compares the two vectors without any error tolerance.
      * @param Other vector for comparision. */
-    inline bool is_exact_equal(const V &other) inline const
+    inline bool is_exactly_equal(const V &other) inline const
     {
         return (X == other.X) && (Y == other.Y) && (Z == other.Z);
     }
