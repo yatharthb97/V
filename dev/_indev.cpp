@@ -1,72 +1,20 @@
-/**Class Q - Represents Quartenion. A class of variables that defines a four component Quaternion.
- */
-class Q
+
+
+
+
+/** @brief Casts a 2D vector to a 3D vector. z-value is assigned zero.
+ * @param x and y values. */
+inline V cast_2D(double x, double y)
 {
+    return V(x, y, 0);
+}
 
-public:
-   
-   //Class Members 
-    double a; /*!< real component of quart */ 
-    double b; /*!< imaginary component 1 */
-    double c; /*!< imaginary component 2 */
-    double d; /*!< imaginary component 3 */
-//**********************************************************************************
-
-    //1
-    //!Class Constructor. Initialises each component to 0.
-    /*
-    */
-    Q():a(0), b(0), c(0), d(0){} //End of Constructor
-//**********************************************************************************
-
-    //2
-    //!Overloading Class Constructor. Initialises each component to passed parameters.
-    /*
-    \param a,b,c,d components
-    */
-    Q(double a,double b, double c, double d): a(a), b(b), c(c), d(d) 
-        {} //End of Overloading Constructor
-//**********************************************************************************
-
-    //3
-    //!Print Quart Info function. Prints the vector with comma seperated components and enclosed in brackets.
-    /*
-    */
-   std::string info() const 
-    {
-        std::ostringstream o;
-        o << "(" <<a << ", " << b << ", " << c << ", "<< d << ")";
-        return o.str();
-    } //End of info()
-//**********************************************************************************
-    //4
-    //!Print Quart Raw Info function. Prints the vector with space seperated components and without brackets.
-    /*
-    */
-    std::string infoRaw() const 
-    {
-        std::ostringstream o;
-        o <<a << " " << b << " " << c <<" "<< d;
-        return o.str();
-    } //End of infoRaw()
-//**********************************************************************************
-
-    //Returns unit Q
-    Q verson()
-    {
-
-    }
-
-
-    Q rndVerson(const double &r1, const double &r2, const double &r3)
-    {}
-
-};//End of class Q
-
-
-
-
-
+/** @brief Casts a 2D vector to a 3D vector. z-value is assigned zero.
+ * @param Array of size 2 with x and y values. */
+inline V cast_2D(double* array)
+{
+    return V(array[0], array[1], 0);
+}
 
 
 

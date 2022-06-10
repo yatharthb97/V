@@ -1048,20 +1048,10 @@ public:
 
     //Multi Vector Operations
 
-
-    //Friend Declarations
-    friend std::ostream& operator<< (std::ostream &stream, const V &vec); //61
-
 }; //end of class V
 //**********************************************************************************
  
-//61 
-//! Stream operator overload that puts V::info() to the ostream.
-std::ostream& operator<< (std::ostream &stream, const V &vect)
-{
-    stream << vect.info();
-    return stream;
-} //End of friend overload operator<<
+
 
 ////////////////////////////////END OF TRANSLATION UNIT/////////////////////////
 
