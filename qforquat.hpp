@@ -32,6 +32,7 @@ public:
     std::string rep() const 
     {
         std::ostringstream stream;
+        stream << std::setprecision(V::precision);
         stream << "[[" << W << ", " << I << ", " << J << ", "<< K << "]]";
         return stream.str();
     }
@@ -42,13 +43,14 @@ public:
     std::string str() const 
     {
         std::ostringstream stream;
+        stream << std::setprecision(V::precision);
         stream << W << " " << I << " " << J <<" "<< K;
         return stream.str();
     } //End of infoRaw()
 
     //5
-    /** @brief Print the Quat in a polynomial format. */
-    std::string polynomial() const 
+    /** @brief Print the Quat in a expanded format. */
+    std::string expand() const 
     {
         std::ostringstream stream;
         stream << std::setprecision(V::precision);
@@ -56,18 +58,18 @@ public:
         return stream.str();
     }
 
-    V img_comp() const
+    V img() const
     {
         return V(I, K, K);
     }
 
     /** @brief Alias of `Q::img_component()`. */
-    double vect_comp() __attribute__((always_inline, flatten)) const
+    double vect() __attribute__((always_inline, flatten)) const
     {
         return this->img_comp()
     }
 
-    double real_comp() const
+    double real() const
     {
         return this->W;
     }
